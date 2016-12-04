@@ -1,8 +1,22 @@
-define(function(){
+define(["./Toolbar"], function(
+		Toolbar){
 	
+	/*
+	 * <div>
+	 *		<div class="workspace"></div>
+	 *		<div class="toolbar"></div>
+	 * </div>
+	 */
 	var Editor = function(containerId){
 		var container = this.container = d3.select("#" + containerId);
-		var svg = this.svg = container.append("svg").attr("width", "100%").attr("height", "100%");
+		
+		var editorWrapper = this.editorWrapper = container.append("div").classed("graphEditor", true);
+		var workspaceDiv = this.workspaceDiv = editorWrapper.append("div").classed("workspace", true);
+		
+		var toolbar = new Toolbar(editorWrapper.node());
+		toolbar.setup();
+		
+		var svg = this.svg = workspaceDiv.append("svg").attr("width", "100%").attr("height", "100%");
 		
 		var line = d3.line().curve(d3.curveBasis);
 
